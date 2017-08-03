@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>White Boards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>User</th>
+      <th>Chatroom</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @whiteboards.each do |whiteboard| %>
+      <tr>
+        <td><%= whiteboard.image %></td>
+        <td><%= whiteboard.user_id %></td>
+        <td><%= whiteboard.chatroom_id %></td>
+        <td><%= link_to 'Show', whiteboard %></td>
+        <td><%= link_to 'Edit', edit_whiteboard_path(whiteboard) %></td>
+        <td><%= link_to 'Destroy', whiteboard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New White Board', new_whiteboard_path %>

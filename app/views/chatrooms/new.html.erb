@@ -1,0 +1,42 @@
+<div class ="ui three column middle aligned center aligned grid">
+
+  <div class="column">
+
+    <%= form_tag direct_chatroom_path do %>
+
+      <%= text_field_tag "Name" %>
+      <%= submit_tag "Go" %>
+
+    <% end %>
+
+    <div class="ui message">
+      New to us?<br>Create a DrawingRoom!
+      <%= form_for(@chatroom) do |f| %>
+        <% if @chatroom.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@chat_room.errors.count, "error") %> prohibited this chat_room from being saved:</h2>
+
+            <ul>
+            <% @chatroom.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="field">
+          <%= f.label :name %>
+          <%= f.text_area :name %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+      <% end %>
+
+    </div>
+
+
+
+  </div>
+</div>

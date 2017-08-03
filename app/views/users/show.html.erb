@@ -1,0 +1,30 @@
+
+<div class="ui grid">
+  <div class="three wide column">
+    <div class="ui right floated small rounded image">
+      <%= link_to cl_image_tag(@user.avatar, :width=>300, :height=>400, :crop=>"crop", :gravity=>"face", :secure=>true)%>
+      <div class="ui compact segment">
+        <div class="ui header">
+          <h2> <%= @user.name %> </h2>
+          <h4> <%= @user.email %> </h4>
+          <h4> <%= @user.profile %> </h4>
+        </div>
+        <% if @current_user == @user %>
+        <%= link_to 'Edit Profile', edit_user_path(@user), class: 'ui button' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="twelve wide column">
+    <div class="ui three column grid">
+      <div class="column">
+
+        <div class="ui centered card">
+          <div class="ui image">
+          </div>
+        </div>
+
+        <div class="ui container"></div>
+
+    </div>
+  </div>

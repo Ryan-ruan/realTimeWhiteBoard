@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @white_board.image %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @white_board.user_id %>
+</p>
+
+<p>
+  <strong>Chatroom:</strong>
+  <%= @white_board.chatroom_id %>
+</p>
+
+<%= link_to 'Edit', edit_white_board_path(@white_board) %> |
+<%= link_to 'Back', white_boards_path %>

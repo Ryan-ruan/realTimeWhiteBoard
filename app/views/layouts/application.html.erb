@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RealTimeWhiteBoard</title>
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+  </head>
+
+  <body>
+    <!-- <nav>
+   <% unless @current_user.present? %>
+     <%= link_to 'Login', login_path %> | <%= link_to 'Signup', new_user_path %>
+   <% else %>
+     <p>
+       Welcome, <%= link_to @current_user.name, user_path(@current_user) %> |
+       <%= link_to 'Logout', login_path, method: :delete %>
+   </p>
+   <% end %>
+   </nav> -->
+   <nav>
+
+     <div class="ui container">
+       <div class="ui  menu">
+         <a class="item">
+           <%= button_to "Earth ", root_path, :method => :get, class: 'ui inverted blue button item' %>
+           </a>
+         <a class="item">
+         <%= button_to "Drawing ", new_chatroom_path, :method => :get, class: 'ui inverted blue button item' %>
+         </a>
+
+
+           <!-- right  menu -->
+
+           <div class="right menu">
+
+                 <% unless @current_user.present? %>
+                   <div class="item">
+                     <%= link_to login_path do %>
+                       <i class="user icon"></i>
+                       Login
+                     <% end %>
+                   </div>
+                   <div class="item">
+                     <%= link_to new_user_path do %>
+                       <i class="edit icon"></i>
+                       Signup
+                     <% end %>
+                   </div>
+
+                 <% else %>
+                   <div class="item">
+                     <%= link_to cl_image_tag(@current_user.avatar, :width=>300, :height=>300, :crop=>"crop", :gravity=>"face", :secure=>true), user_path(@current_user), class: "ui avatar image"%> <%= link_to @current_user.name, user_path(@current_user) %>
+                   </div>
+                   <div class="item">
+                     <%= link_to login_path, :method => :delete do %>
+                       <i class="power icon"></i>
+                       Logout
+                     <% end %>
+                   </div>
+                 <% end %>
+
+
+
+         </div>
+
+   </nav>
+
+
+
+
+
+
+    <%= yield %>
+
+  </body>
+
+</html>

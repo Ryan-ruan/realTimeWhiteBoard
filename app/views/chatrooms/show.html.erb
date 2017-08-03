@@ -1,0 +1,88 @@
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5965f36bf26d0d08"></script>
+
+<% if @current_user.present? %>
+<script>
+  var current_user_id = <%=@current_user.id %>;
+</script>
+<% end %>
+ <!-- make the chatbox div set to a fixed size and scroll through content -->
+<div class="ui grid">
+  <div class="six wide column">
+    <h1><%= @chatroom.name %></h1>
+
+    <div id="chaty">
+      <div id="chat">
+        <div class="wrapper">
+          <% if @chatroom.messages.any? %>
+          <div class="messages-body center" id="messages">
+            <%= render partial: 'messages/message', collection: @chatroom.messages%>
+          </div>
+          <%else%>
+          <div class="panel-body hidden" id="messages">
+          </div>
+          <%end%>
+        </div>
+      </div>
+      <div id="message_input">
+        <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
+      </div>
+    </div>
+  </div>
+
+  <div class="ten wide column">
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+  <div id="buttons">
+    <button class="ui button" id ='drawing' >drawing</button>
+    <button class="ui button" id = "clear" >clear</button>
+    <button class="ui button" id = "download" >download</button>
+    <button class="ui button" id = "upload" >upload</button>
+  </div>
+  <div class="ui grid">
+  <div id="editor_ui" style="display:none" class="ten wide column">
+    <div class="ui top attached tabular icon menu">
+      <a class="active item" data-tab="first" id="brush">
+        <i class="purple paint brush icon"></i>
+      </a>
+      <a class="item text" id = "text" data-tab="two">
+        <i class="purple text width icon"></i>
+      </a>
+    </div>
+
+    <div class="ui bottom attached active tab segment" data-tab="first">
+      <h4>Brush</h4>
+      <br>
+      <label for="drawing-color">
+        Color:</label>
+      <input type="color" value="#005E7A" id="drawing-line-color">
+      <br>
+      <label for="drawing_line-width">Width:</label>
+      <span id="width-info" class="info">10</span>
+      <br>
+      <input type="range" value="10" min="0" max="100" id="drawing-line-width">
+    </div>
+    <!-- text tab -->
+    <div class="ui bottom attached tab segment"  data-tab="two">
+      <h4>Text</h4>
+      <br>
+      <label for="font-color">Color:</label>
+      <input type="color" value="#005E7A" id="font-color">
+      <br>
+      <br>
+      <label for="font-info">Size:
+      </label>
+      <span id="size-info" class="info">48</span>
+      <br>
+      <input type="range" value="48" min="12" max="96" id="font-size">
+      <button id="add-text" class="ui teal small button">Add</button>
+    </div>
+
+    </div>
+
+
+          <div id="earth" class="six wide column">
+            <script type="text/javascript" src="//rf.revolvermaps.com/0/0/2.js?i=54ivxaibeir&amp;m=0&amp;s=178&amp;c=ff0000&amp;t=1" async="async"></script>
+          </div>
+      </div>
+  </div>
+</div>
