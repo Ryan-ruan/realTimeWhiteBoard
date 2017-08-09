@@ -76,6 +76,12 @@ app.init = function(){
   app.moon = app.moon();
   app.scene.add( app.moon );
 
+  app.sun = app.sun();
+  app.scene.add( app.sun );
+
+  app.sun1 = app.sun1();
+  app.scene.add( app.sun1 );
+
   app.ambient = new THREE.AmbientLight( 0x555555 );
   app.scene.add( app.ambient );
 
@@ -100,7 +106,7 @@ app.init = function(){
   // app.gui.add( app.controller, 'bouncingSpeed', 0, 2.0 );
   // app.gui.add( app.controller, 'velocityScale', -2, 2 );
   // app.gui.add( app.controller, 'gravityScale', -0.1, 0.1 );
-
+  //
 
   // Attach the canvas element created by the renderer onto the page
   document.getElementById("output").appendChild( app.renderer.domElement );
@@ -266,6 +272,8 @@ app.animate = function(){
 
   app.sphere.rotation.y += app.controller.rotationSpeed;
   app.moon.rotation.y += app.controller.rotationSpeed;
+  app.sun.rotation.y += app.controller.rotationSpeed;
+  app.sun1.rotation.y += app.controller.rotationSpeed;
 
 
   // app.sphere.position.x = -20 + ( 10 * Math.cos(app.controller.step) );
@@ -319,6 +327,40 @@ app.moon = function(){
   var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
   sphere.position.set(60, 0, 0 );
+  // sphere.castShadow = true;
+
+  return sphere;
+};
+
+app.sun = function(){
+
+  var sphereGeometry = new THREE.SphereGeometry( 50, 40, 40 );  // radius, X and Y segments to approximate sphere with
+  var sphereMaterial = new THREE.MeshLambertMaterial({
+    color: 0xe7ea3c,
+    wireframe: false,
+    side: THREE.DoubleSide,
+  });
+
+  var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+
+  sphere.position.set(- 200, 0, 0 );
+  // sphere.castShadow = true;
+
+  return sphere;
+};
+
+app.sun1 = function(){
+
+  var sphereGeometry = new THREE.SphereGeometry( 50, 40, 40 );  // radius, X and Y segments to approximate sphere with
+  var sphereMaterial = new THREE.MeshLambertMaterial({
+    color: 0xFFFFFF,
+    wireframe: true,
+    side: THREE.DoubleSide,
+  });
+
+  var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+
+  sphere.position.set(- 200, 0, 0 );
   // sphere.castShadow = true;
 
   return sphere;

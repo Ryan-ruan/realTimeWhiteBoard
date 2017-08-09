@@ -1,20 +1,29 @@
-<div class ="ui three column middle aligned center aligned grid">
+<div class ="ui four column middle aligned center aligned grid">
 
-  <div class="column">
+  <div class=" column" id = "login">
+
+
+    <div class="ui compact segment">
+    <h2 class="ui header">Input your studio name</h2>
 
     <%= form_tag direct_chatroom_path do %>
-
+    <div class="ui left icon input">
+    <i class="paint  brush icon"></i>
       <%= text_field_tag "Name" %>
+    </div>
+
+
       <%= submit_tag "Go" %>
 
     <% end %>
 
+
     <div class="ui message">
-      New to us?<br>Create a DrawingRoom!
+      New to us?<br>Create a Drawing Studio!
       <%= form_for(@chatroom) do |f| %>
         <% if @chatroom.errors.any? %>
           <div id="error_explanation">
-            <h2><%= pluralize(@chat_room.errors.count, "error") %> prohibited this chat_room from being saved:</h2>
+            <h2><%= pluralize(@chatroom.errors.count, "error") %> prohibited this chat_room from being saved:</h2>
 
             <ul>
             <% @chatroom.errors.full_messages.each do |message| %>
@@ -25,7 +34,6 @@
         <% end %>
 
         <div class="field">
-          <%= f.label :name %>
           <%= f.text_area :name %>
         </div>
 
@@ -35,6 +43,8 @@
       <% end %>
 
     </div>
+
+      </div>
 
 
 

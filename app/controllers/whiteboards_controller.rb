@@ -24,16 +24,15 @@ class WhiteboardsController < ApplicationController
   # POST /whiteboards
   # POST /whiteboards.json
   def create
-    @whiteboard = Whiteboard.new(whiteboard_params)
+    # raise 'hell'
+    @whiteboard = Whiteboard.new(chatroom_id: params[:chatroom_id])
+    # @whiteboard.user = @current_user
+    if params[:image].present?
+    # upload to Cloudinary
+      res = Cloudinary::Uploader.upload(params[:image])
+      w = Whiteboard.create user: @current_user, image: res["public_id"]
 
-    respond_to do |format|
-      if @whiteboard.save
-        format.html { redirect_to @whiteboard, notice: 'White board was successfully created.' }
-        format.json { render :show, status: :created, location: @whiteboard }
-      else
-        format.html { render :new }
-        format.json { render json: @whiteboard.errors, status: :unprocessable_entity }
-      end
+      redirect_to user_path( @current_user )
     end
   end
 
@@ -69,6 +68,6 @@ class WhiteboardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def whiteboard_params
-      params.require(:whiteboard).permit(:image, :user_id, :chatroom_id)
+      params.permit(:chatroom_id)
     end
 end

@@ -10,7 +10,6 @@ class MessagesController < ApplicationController
        user: message.user.name
      head :ok
     else
-      puts "="*100
       redirect_to chatrooms_path
     end
   end

@@ -1,5 +1,9 @@
+
+
 var canvas;
 $(document).ready(function(){
+
+  if($('body.chatrooms.show').length){
 
 /*
   App.messages.draw({  //app not set
@@ -36,7 +40,7 @@ $(document).ready(function(){
 
     canvas.isDrawingMode = true;
     // debugger;
-    canvas.freeDrawingBrush = new fabric['PencilBrush'](canvas, websocketsDrawPathSend);
+    canvas.freeDrawingBrush = new fabric['PencilBrush'](canvas); //, websocketsDrawPathSend);
     canvas.freeDrawingBrush.width = 10;
     canvas.freeDrawingBrush.color = '#005E7A';
 
@@ -44,8 +48,8 @@ $(document).ready(function(){
     $('.canvas-container').mousemove(
       function(e){
         if( event.buttons == 1) {
-
           console.log(e.offsetX, e.offsetY);
+          console.log("color",canvas.freeDrawingBrush.color);
           App.messages.draw({  //app not set
             x: e.offsetX,
             y: e.offsetY,
@@ -71,15 +75,20 @@ $(document).ready(function(){
         });
 
         $('#drawing-line-width').on('change', function(){
+          var canvasWidth = canvas.freeDrawingBrush.width ;
           canvas.freeDrawingBrush.width = parseInt(this.value, 10) || 1;
           $('#width-info').text(this.value);
         });
 
         $('#drawing-line-color').on('change', function(){
           canvas.freeDrawingBrush.color = this.value;
+
+          var canvasColor =this.value ;
           $('#color-info').text(this.value);
 
         });
+
+
     //
     //
         $('#text').on('click', function(){
@@ -131,8 +140,8 @@ $(document).ready(function(){
         // ======================Upload to cloud ==========================
 
 
-        $('#upload').submit(function () {
-
+        $('#upload').click(function () {
+          console.log('click upload');
           var dataurl = canvas.toDataURL('image/png');
           $('#image').val( dataurl );
 
@@ -142,6 +151,6 @@ $(document).ready(function(){
 
 
 
-
+  } // end controller/action test
 
 });

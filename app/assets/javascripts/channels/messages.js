@@ -27,23 +27,36 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
 
       } else {
         // draw a point
-        canvas.freeDrawingBrush.onMouseDown({x: data.x, y:data.y, isWebsocketsDraw: true});
+
+        // canvas.isDrawingMode = true;
+        // debugger;
+        // canvas.freeDrawingBrush = new fabric['PencilBrush'](canvas);
+        // canvas.freeDrawingBrush.width = 10;
+        // canvas.freeDrawingBrush.color = '#005E7A';
+
+        console.log('%ccolor', 'color:green', canvas.freeDrawingBrush.color, 'new', data.colour, { x: data.x, y:data.y });
+        canvas.freeDrawingBrush.color = data.colour;
+        // debugger;
+
+        canvas.freeDrawingBrush.onMouseDown({ x: data.x, y: data.y}); //, colour: // canvas.freeDrawingBrush.color,  isWebsocketsDraw: true});
       }
 
     } else {
       // default message is a chat message
       console.log('received message: ', data);
       $("#messages").removeClass('hidden')
+      $("#messages").scrollTop($("#messages").children().height());
       return $('#messages').append(this.renderMessage(data));
     }
   },
 
   renderMessage: function(data) {
     // Render whatever Rails renders when this page is first loaded
-    return "<p> <b>" + data.user + ": </b>" + data.message + "</p>";
+    return "<p class='ui message'> <b>" + data.user + ": </b>" + data.message + "</p>";
   },
 
   draw: function (data) {
+    console.log('messages.js draw()', data);
     return this.perform('draw', data);
   }
   //

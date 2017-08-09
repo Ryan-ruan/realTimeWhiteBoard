@@ -12,10 +12,14 @@ class ChatroomsController < ApplicationController
     # raise 1
     # @chatroom = Chatroom.find_by name: params[:id]
     @message = Message.new
+
+
   end
 
   def direct
-    redirect_to "/chatrooms/#{params[:Name]}"
+    redirect_to  "/chatrooms/#{params[:Name]}"
+    #chatroom_path( @chatroom.name )
+
   end
 
   # GET /chatrooms/new
@@ -28,11 +32,11 @@ class ChatroomsController < ApplicationController
 
     respond_to do |format|
       if @chatroom.save
-        format.html { redirect_to @chatroom, notice: 'Chat room was successfully created.' }
-        format.json { render :show, status: :created, location: @chatroom }
+        format.html { redirect_to chatroom_path( @chatroom.name ), notice: 'Chat room was successfully created.' }
+        # format.json { render :show, status: :created, location: @chatroom }
       else
         format.html { render :new }
-        format.json { render json: @chatroom.errors, status: :unprocessable_entity }
+        # format.json { render json: @chatroom.errors, status: :unprocessable_entity }
       end
     end
   end
