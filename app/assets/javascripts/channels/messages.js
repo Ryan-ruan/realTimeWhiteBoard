@@ -10,44 +10,73 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
       if( data.user_id === current_user_id ){
         return;
       }
+      console.log('%cdraw: ', 'color:green', data);
 
-      // drawClick(data.x, data.y);
-      // $(document.elementFromPoint(data.x, data.y)).click();
+      // check if this user already has a remoteCanvases[user_id] entry
+      // if so, update their fields
+      // if not, create a new object for them, like this:
+      remoteCanvases[data.user_id] = {
+        lastPointerPosition: { x: data.x, y: data.y },
+        isPaint: false,
+        layer: null,   // Konva layer (or canvas??) object here
+      };
 
-      if( data.type && data.type === 'drawPath' ){
 
-        console.log('draw path received!', data);
-
-        // draw a smooth path (just as fabric does for us on the original drawing client's canvas)
-        canvas.freeDrawingBrush._render({
-          p1: new fabric.Point(data.p1.x, data.p1.y),
-          p2: new fabric.Point(data.p2.x, data.p2.y),
-           v: data.v
-        });
-
-      } else {
-        // draw a point
-
-        // canvas.isDrawingMode = true;
-        // debugger;
-        // canvas.freeDrawingBrush = new fabric['PencilBrush'](canvas);
-        // canvas.freeDrawingBrush.width = 10;
-        // canvas.freeDrawingBrush.color = '#005E7A';
-
-        console.log('%ccolor', 'color:green', canvas.freeDrawingBrush.color, 'new', data.colour, { x: data.x, y:data.y });
-        canvas.freeDrawingBrush.color = data.colour;
-        // debugger;
-
-        canvas.freeDrawingBrush.onMouseDown({ x: data.x, y: data.y}); //, colour: // canvas.freeDrawingBrush.color,  isWebsocketsDraw: true});
+      if( data.type ){
+        switch( data.type ){
+        case 'mouseDown':
+          remoteDrawStart(data);
+          break;
+        case 'mouseMove':
+          remoteDrawMove(data);
+          break;
+        case 'mouseUp':
+          remoteDrawStop(data);
+          break;
+        }
       }
 
-    } else {
-      // default message is a chat message
-      console.log('received message: ', data);
-      $("#messages").removeClass('hidden')
-      $("#messages").scrollTop($("#messages").children().height());
-      return $('#messages').append(this.renderMessage(data));
-    }
+    } // action==='draw'
+
+    //   // drawClick(data.x, data.y);
+    //   // $(document.elementFromPoint(data.x, data.y)).click();
+    //
+    //   if( data.type && data.type === 'drawPath' ){
+    //
+    //     console.log('draw path received!', data);
+    //
+    //     // draw a smooth path (just as fabric does for us on the original drawing client's canvas)
+    //     canvas.freeDrawingBrush._render({
+    //       p1: new fabric.Point(data.p1.x, data.p1.y),
+    //       p2: new fabric.Point(data.p2.x, data.p2.y),
+    //        v: data.v
+    //     });
+    //
+    //   } else {
+    //     // draw a point
+    //
+    //     // canvas.isDrawingMode = true;
+    //     // debugger;
+    //     // canvas.freeDrawingBrush = new fabric['PencilBrush'](canvas);
+    //     // canvas.freeDrawingBrush.width = 10;
+    //     // canvas.freeDrawingBrush.color = '#005E7A';
+    //
+    //     console.log('%ccolor', 'color:green', canvas.freeDrawingBrush.color, 'new', data.colour, { x: data.x, y:data.y });
+    //     canvas.freeDrawingBrush.color = data.colour;
+    //     // debugger;
+    //
+    //     canvas.freeDrawingBrush.onMouseDown({ x: data.x, y: data.y}); //, colour: // canvas.freeDrawingBrush.color,  isWebsocketsDraw: true});
+    //   }
+    //
+    // } else {
+    //   // default message is a chat message
+    //   console.log('received message: ', data);
+    //   $("#messages").removeClass('hidden')
+    //   $("#messages").scrollTop($("#messages").children().height());
+    //   return $('#messages').append(this.renderMessage(data));
+    // }
+
+
   },
 
   renderMessage: function(data) {

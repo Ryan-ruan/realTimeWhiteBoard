@@ -1,6 +1,11 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # ip_address = Socket.ip_address_list.detect(&:ipv4_private?).try(:ip_address)
+  # TODO: This will need to be the heroku site domain name
+  address = 'something.heroku-app.com'
+  config.action_cable.url = "ws://#{ address }:3000/cable"
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
