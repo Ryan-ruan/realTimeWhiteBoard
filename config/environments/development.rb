@@ -1,6 +1,6 @@
 Rails.application.configure do
 
-  config.action_cable.url = "ws://localhost:3000/cable"
+  config.action_cable.url = "ws://10.22.1.104:3000/cable"
 
   # Settings specified here will take precedence over those in config/application.rb.
 
